@@ -20,12 +20,6 @@ var webpackConfig = merge(baseWebpackConfig, {
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
-  vue: {
-    loaders: utils.cssLoaders({
-      sourceMap: config.build.productionSourceMap,
-      extract: true
-    })
-  }
 })
 webpackConfig.plugins = webpackConfig.plugins.concat([
   // http://vuejs.github.io/vue-loader/workflow/production.html
@@ -38,7 +32,7 @@ webpackConfig.plugins = webpackConfig.plugins.concat([
     }
   }),
   new CleanPlugin(['../dist']), //清空生成目录
-  new webpack.optimize.OccurenceOrderPlugin(),
+  // new webpack.optimize.OccurenceOrderPlugin(),
   // extract css into its own file
   new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
   // generate dist index.html with correct asset hash for caching.
