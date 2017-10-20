@@ -31,6 +31,8 @@ module.exports = {
     "no-unused-expressions": 0,// 禁止无用的表达式
     "consistent-return": 0,// return 后面是否允许省略
     "func-names": 0,// 函数表达式必须有名字
+    "import/no-extraneous-dependencies": 0,
+    "import/no-unresolved": 0,
     // // allow async-await
     // 'generator-star-spacing': 0,
     // // allow debugger during development

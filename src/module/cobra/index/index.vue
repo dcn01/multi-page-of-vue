@@ -1,12 +1,12 @@
 <template xmlns="http://www.w3.org/1999/html">
   <div>
-    <div id="wrapper" v-if="percent != 100">
+    <div id="wrapper" v-show="percent != 100">
       <div :class="`loader-container ${percent > 0 ? 'run' : ''}  ${percent === 100 ? 'done' : ''}`">
         <div class="meter">{{percent}}</div>
         <span class="runner"></span>
       </div>
     </div>
-    <div class="page-index scroll allow-touchmove" v-else>
+    <div class="page-index scroll allow-touchmove" v-show="percent === 100">
       <div class="header">
         <div class="sort"></div>
         <div class="iconfont icon-fangxinfei Shake"></div>
@@ -87,7 +87,7 @@
           </div>
         </transition>
         <div class="card">
-          <img src="./images/qianduancainiao-min.jpg" alt="">
+          <img src="./images/qianduancainiao.jpg" alt="">
           <div class="title">从零开始，如何成为一个前端工程师？</div>
           <div class="description">BY&nbsp;<i>carry</i>&nbsp;&nbsp;Oct 10 2017</div>
           <p>切图仔？对的，有很多人称呼前端工程师为切图仔。切图仔的来源其实也是有据可查，早期的前端从设计师手里拿到PSD文件，也就是通常的设计图，然后根据需要把psd切成一个个小的的图片，再把这些图片组合成一个Html网页，对的，早期的前端的工作就是这么多。这也是名副其实的切图仔。当然作为一个菜鸟前端，切图仔就是我们第一个身份，也是必须经历的身份，而且是很重要的身份。为什么这样说呢？通常切图仔针对于前端工程师来说不是菜鸟的象征吗？其实不然，无论你在前端领域的造诣有多高，但是只要你还是一个开发的话，你的工作中最重要的事情不还是把设计图转化为网页吗？只有有了跟设计图匹配的网页布局，后面才能做更多的事情。</p>
@@ -220,7 +220,7 @@
           return;
         }
         this.percent += 1;
-      }, 100);
+      }, 30);
     },
     methods: {
       checkClick(txt) {
@@ -242,12 +242,12 @@
   }
   .loader-container {
     height: 6px;
-    width: 600px;
+    width: 200px;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-top: -3px;
-    margin-left: -300px;
+    margin-left: -100px;
     background-color: transparent;
     background-image: -webkit-linear-gradient(left, #5bd8ff, #ff0000);
     box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.4);
@@ -277,16 +277,17 @@
     width: 0%;
     background-color: transparent;
     background-image: -webkit-linear-gradient(top, #000000, #212121);
-    animation: loader 10s linear;
+    animation: loader 3s linear;
   }
   .meter {
     position: absolute;
     top: 0;
-    right: 0;
-    font-size: 2em;
+    left: 80px;
+    width: 40px;
+    font-size: 20px;
     margin-top: .3em;
     color: #ff0000;
-    animation: meter 10s linear;
+    animation: meter 3s linear;
     text-shadow: 0 -1px 0 #333333;
   }
   .meter:after {
@@ -491,6 +492,31 @@
     }
   }
   @media screen and (min-width: 415px) {
+    .loader-container {
+      height: 6px;
+      width: 600px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -3px;
+      margin-left: -300px;
+      background-color: transparent;
+      background-image: -webkit-linear-gradient(left, #5bd8ff, #ff0000);
+      box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.4);
+      border-radius: 3px 0 0 3px;
+    }
+    .meter {
+      position: absolute;
+      top: 0;
+      left: auto;
+      right: 0;
+      width: auto;
+      font-size: 2em;
+      margin-top: .3em;
+      color: #ff0000;
+      animation: meter 3s linear;
+      text-shadow: 0 -1px 0 #333333;
+    }
     .page-index{
       min-width: 1200px;
       .header {

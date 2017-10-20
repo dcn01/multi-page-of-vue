@@ -19,6 +19,6 @@
     opacity: 0
   }
 }
-.fade-leave {
+.fade-leave-active {
   animation: fade-leave 1s ease-out;
 }
