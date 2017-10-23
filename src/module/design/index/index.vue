@@ -25,7 +25,7 @@
           <div class="bar-title">About</div>
           <div class="bar-title">Photo</div>
           <div class="bar-title">Contact</div>
-          <footer>this web site is open sourced on <a href="">github</a></footer>
+          <footer>this web site is open sourced on <a href="https://github.com/guxuelong/multi-page-of-vue">github</a></footer>
         </div>
       </transition>
     </div>
