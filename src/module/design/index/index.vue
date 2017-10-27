@@ -1,6 +1,6 @@
 <template xmlns="http://www.w3.org/1999/html">
   <div>
-    <Loading :loaded="loaded"/>
+    <!-- <Loading :loaded="loaded"/> -->
     <div class="page-index scroll allow-touchmove">
       <transition name="fade">
         <div id="logo" v-show="!isLoading"></div>
@@ -28,6 +28,12 @@
           <footer>this web site is open sourced on <a href="https://github.com/guxuelong/multi-page-of-vue">github</a></footer>
         </div>
       </transition>
+      <svg id="long" xmlns="http://www.w3.org/2000/svg" version="1.1" width="500" height="800">
+        <path stroke="#fff" stroke-width="3" fill="none" d="M 0,50 l 10,10 l 30 -20 l 30 0 q -30,60 0,60  c 30,0 -10,120 -40,100 q -30,-30 60,-80 q 80,-50 50,-60  c -20,-5 -50,30 0,40 c 60,10 80,80 -10,160"/>
+        <path stroke="#fff" stroke-width="3" fill="none" d="M 0,54 l 10,10 l 30 -20 l 30 0 q -30,60 0,60  c 30,0 -10,120 -40,100 q -30,-30 60,-80 q 80,-50 50,-60  c -20,-5 -50,30 0,40 c 60,10 80,80 -10,160"/>
+        <path stroke="#fff" stroke-width="3" fill="none" d="M 0,53 l 10,10 l 30 -20 l 30 0 q -30,60 0,60  c 30,0 -10,120 -40,100 q -30,-30 60,-80 q 80,-50 50,-60  c -20,-5 -50,30 0,40 c 60,10 80,80 -10,160"/>
+        <path stroke="#fff" stroke-width="2" fill="none" d="M 0,57 l 10,10 l 30 -20 l 30 0 q -30,60 0,60  c 30,0 -10,120 -40,100 q -30,-30 60,-80 q 80,-50 50,-60  c -20,-5 -50,30 0,40 c 60,10 80,80 -10,160"/>
+      </svg>
     </div>
   </div>
 </template>
@@ -43,7 +49,7 @@
         init: false,
         percent: 0,
         active: 2,
-        isLoading: true,
+        isLoading: false,
         barClose: false,
       };
     },
@@ -153,6 +159,7 @@
     bottom: 0;
     left:0;
     right: 0;
+
     #logo {
       background: url('images/logo.png') no-repeat;
       background-size: cover;
@@ -256,6 +263,11 @@
           color: #ff6b38;
         }
       }
+    }
+    #long {
+      position: absolute;
+      left: 400px;
+      top: 200px;
     }
   }
 </style>
