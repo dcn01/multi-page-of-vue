@@ -28,7 +28,9 @@ webpackConfig.plugins = webpackConfig.plugins.concat([
   }),
   new webpack.optimize.UglifyJsPlugin({
     compress: {
-      warnings: false
+      warnings: false,
+      drop_debugger: true,
+      drop_console: true
     }
   }),
   new CleanPlugin(['../dist']), //清空生成目录
