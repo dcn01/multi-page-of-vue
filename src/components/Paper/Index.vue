@@ -25,6 +25,7 @@ export default {
 </script>
 <style>
   .wrapper{
+    font-size: 14px;
     margin:0 auto;
     width:100%;
     min-height:300px;
@@ -38,7 +39,7 @@ export default {
       padding: 60px 30px;
       min-height:200px;
       color:#f5f5f5;
-      font-size:12px;
+      font-size:13px;
       line-height: 20px;
       /*文字换行*/
       word-wrap: break-word;
@@ -70,7 +71,7 @@ export default {
       width:100px;
       line-height: 20px;
       text-align: center;
-      font-size:13px;
+      font-size:14px;
       color:#2b2b2b;
       text-decoration: none;
       text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);

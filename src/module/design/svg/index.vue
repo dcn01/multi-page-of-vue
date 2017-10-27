@@ -1,6 +1,6 @@
 <template xmlns="http://www.w3.org/1999/html">
   <div class="page-svg">
-    <div class="svg-main scroll allow-touchmove">
+    <div class="svg-main scroll">
       <Paper title="svg-path" class="blog">
         <p class="title">SVG《Path》 命令详解</p>
         <p class="desc">
@@ -33,7 +33,7 @@
         </p>
         <p class="sub-title">V</p>
         <p class="text">
-          H y 沿着y轴移动一段位置</br>
+          V y 沿着y轴移动一段位置</br>
           直接上例子: d="M 50,20 V 100"
           <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="120">
             <path fill="none" stroke="black" stroke-width="1" d="M 50,20 V 100 "/>
@@ -206,74 +206,9 @@
         if (doc.addEventListener === undefined) return;
         win.addEventListener(resizeEvt, recalc, false);
         doc.addEventListener('DOMContentLoaded', recalc, false);
-        document.body.addEventListener('touchmove', (evt) => {
-          // In this case, the default behavior is scrolling the body, which
-          // would result in an overflow.  Since we don't want that, we preventDefault.
-          document.querySelectorAll('.allow-touchmove').forEach(item => {
-            if (item.contains(evt.target)) {
-              evt.isScroller = true;
-            }
-          });
-          if (!evt.isScroller) {
-            evt.preventDefault();
-          }
-        });
       }(document, window));
     },
     components: { Paper },
-    updated() {
-      let startY = 0;
-      const touchSatrtFunc = function (evt) {
-        try {
-          // evt.preventDefault(); // 阻止触摸时浏览器的缩放、滚动条滚动等
-          const touch = evt.touches[0]; // 获取第一个触点
-          const y = Number(touch.pageY); // 页面触点Y坐标
-          // 记录触点初始位置
-          startY = y;
-        } catch (e) {
-          // (`touchSatrtFunc：${e.message}`);
-        }
-      };
-      if (!this.ontouchmove) {
-        // touchstart事件
-        document.addEventListener('touchstart', touchSatrtFunc, false);
-        this.ontouchmove = function (ev) {
-          const ss = document.querySelector('.scroll');
-          const point = ev.touches[0];
-          const top = ss.scrollTop;
-          // 什么时候到底部
-          const bottomFaVal = ss.scrollHeight - ss.offsetHeight;
-          // 到达顶端
-          if (top <= 0) {
-            // 阻止向下滑动
-            if (point.clientY > startY) {
-              ev.preventDefault();
-            } else {
-              // 阻止冒泡
-              // 正常执行
-              ev.stopPropagation();
-            }
-          } else if (top === bottomFaVal) {
-            // 到达底部
-            // 阻止向上滑动
-            if (point.clientY < startY) {
-              ev.preventDefault();
-            } else {
-              // 阻止冒泡
-              // 正常执行
-              ev.stopPropagation();
-            }
-          } else if (top > 0 && top < bottomFaVal) {
-            ev.stopPropagation();
-          } else {
-            ev.preventDefault();
-          }
-        };
-      } else {
-        document.querySelector('.allow-touchmove') && document.querySelector('.allow-touchmove').removeEventListener('touchmove', this.ontouchmove);
-      }
-      document.querySelector('.allow-touchmove') && document.querySelector('.allow-touchmove').addEventListener('touchmove', this.ontouchmove);
-    },
     methods: {
       loaded(isLoading) {
         this.isLoading = isLoading;
@@ -289,6 +224,7 @@
 </script>
 <style>
   .page-svg {
+    padding-bottom: 10px;
     max-width: 950Px;
     margin: auto;
     .svg-main {
