@@ -171,9 +171,6 @@
         <p class="sub-title">Z</p>
         <p class="text">从当前位置到起点画一条直线闭合。</p>
       </Paper>
-      <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-        <path fill="none" stroke="blue" stroke-width="1" d="M 50,50 v 50  h 50  v 50 h 50 v -50 h 50 v -50 Z  "/>
-      </svg>
     </div>
   </div>
 </template>
