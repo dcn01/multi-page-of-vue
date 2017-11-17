@@ -1,6 +1,6 @@
 <template xmlns="http://www.w3.org/1999/html">
   <div>
-    <!-- <Loading :loaded="loaded"/> -->
+    <Loading :loaded="loaded"/>
     <div class="page-index scroll allow-touchmove">
       <transition name="fade">
         <div id="logo" v-show="!isLoading"></div>
@@ -28,12 +28,16 @@
           <footer>this web site is open sourced on <a href="https://github.com/guxuelong/multi-page-of-vue">github</a></footer>
         </div>
       </transition>
-      <svg id="long" xmlns="http://www.w3.org/2000/svg" version="1.1" width="500" height="800">
-        <path stroke="#fff" stroke-width="3" fill="none" d="M 0,50 l 10,10 l 30 -20 l 30 0 q -30,60 0,60  c 30,0 -10,120 -40,100 q -30,-30 60,-80 q 80,-50 50,-60  c -20,-5 -50,30 0,40 c 60,10 80,80 -10,160"/>
-        <path stroke="#fff" stroke-width="3" fill="none" d="M 0,54 l 10,10 l 30 -20 l 30 0 q -30,60 0,60  c 30,0 -10,120 -40,100 q -30,-30 60,-80 q 80,-50 50,-60  c -20,-5 -50,30 0,40 c 60,10 80,80 -10,160"/>
-        <path stroke="#fff" stroke-width="3" fill="none" d="M 0,53 l 10,10 l 30 -20 l 30 0 q -30,60 0,60  c 30,0 -10,120 -40,100 q -30,-30 60,-80 q 80,-50 50,-60  c -20,-5 -50,30 0,40 c 60,10 80,80 -10,160"/>
-        <path stroke="#fff" stroke-width="2" fill="none" d="M 0,57 l 10,10 l 30 -20 l 30 0 q -30,60 0,60  c 30,0 -10,120 -40,100 q -30,-30 60,-80 q 80,-50 50,-60  c -20,-5 -50,30 0,40 c 60,10 80,80 -10,160"/>
-      </svg>
+      <transition name="fade">
+        <svg  v-show="!isLoading" id="long" xmlns="http://www.w3.org/2000/svg" version="1.1" width="350" height="450">
+          <path :class="`long1 ${isLoading ? '' : 'done'}`" stroke="none" stroke-width="10" fill="none"
+            d="M40,120 l5,0 l5,-1 l5,0 l5,1 l5,-1 l5,-3 l3,3 l3,-4 l3,-3 l3,-4 l3,-3 l0,-10 l3,-3 l3,-2 l8,0 l3,2 l3,3 l3,3 l3,2 l3,2 l8,0 l5,-3 l5,-4 l2,-5 l5,2 l10,-10 l1,-5 l4,2 l30,-24 l-3,-4 l7,0 l5,-5 l10,-8 l10,-10 l10,-8 l5,-3 l5,-2 
+            l5,0 l2,2 l2,4 l-3,4 l-10,2 l-4,2 l-10,5 l-25,20 l 10,-2 l 10,2 l10,3 l10,6 l5,6 l2,6 l0,6 l10,-6 l10,-7 l10,-6 l5,-3 l5,-4 l 5,-2 l5,0 l3,4 l0,3 l-2,1 l-2,0 l-10,0 l-38,24 l0,10 l1,3 l4,2 l0,8 l-5,8 l-15,15 l-5,2 l-10 ,1 l-10,0 l-10,-1 l-20,2 l-10,0 l-10,-1 l-10,-2 l-10,0 l-10,1 l-20,4 l-40,20 l-5,-3 l-10,-10 l2,-5 l2,5 l5,0 l10,1 l5,-1 l10,-5 l20,-10 l10,-2 l-20,-1 l-2,-5 l-2,5 l-10,2 l-10,0 l-10,-1 l-10,0 l-10,1 l-2,-2 l0,-2 l-1,-5 l5,-2 l5,1 z"/>
+          <path :class="`long2 ${isLoading ? '' : 'done'}`" stroke="none" stroke-width="10" fill="none"
+            d="M 180,135 q -80,60, -60,90  q 60,30 30,90 c -120,180 -90,-90 100,-100 c 90,-10 -60,-60 10,10 c 30,30  120,60  0,190
+            c 100,-90 100,-150  10,-190 c -60,-50 30,-30 0,-10 c -120,30  -120,30    -175,140 c -30,110 150,-90 80,-120 c -30,-30 -60,-30  37,-100 z"/>
+        </svg>
+      </transition>
     </div>
   </div>
 </template>
@@ -41,6 +45,7 @@
   import 'src/common/css/index.css';
   import BarCircle from 'src/components/BarCircle/Index.vue';
   import Loading from 'src/components/Loading/Index.vue';
+  import util from 'src/common/js/util.js';
 
   export default {
     name: 'Index',
@@ -49,93 +54,12 @@
         init: false,
         percent: 0,
         active: 2,
-        isLoading: false,
+        isLoading: true,
         barClose: false,
       };
     },
     created() {
-      /* Rem 核心实现 */
-      (function (doc, win) {
-        const docEl = doc.documentElement;
-        const clientWidth = docEl.clientWidth;
-        const resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize';
-        const recalc = function () {
-          if (clientWidth === undefined) return;
-          if (clientWidth >= 414) {
-            docEl.style.fontSize = '20px';
-            return;
-          }
-          docEl.style.fontSize = `${20 * (clientWidth / 375)}px`;
-        };
-        if (doc.addEventListener === undefined) return;
-        win.addEventListener(resizeEvt, recalc, false);
-        doc.addEventListener('DOMContentLoaded', recalc, false);
-        document.body.addEventListener('touchmove', (evt) => {
-          // In this case, the default behavior is scrolling the body, which
-          // would result in an overflow.  Since we don't want that, we preventDefault.
-          document.querySelectorAll('.allow-touchmove').forEach(item => {
-            if (item.contains(evt.target)) {
-              evt.isScroller = true;
-            }
-          });
-          if (!evt.isScroller) {
-            evt.preventDefault();
-          }
-        });
-      }(document, window));
-    },
-    updated() {
-      let startY = 0;
-      const touchSatrtFunc = function (evt) {
-        try {
-          // evt.preventDefault(); // 阻止触摸时浏览器的缩放、滚动条滚动等
-          const touch = evt.touches[0]; // 获取第一个触点
-          const y = Number(touch.pageY); // 页面触点Y坐标
-          // 记录触点初始位置
-          startY = y;
-        } catch (e) {
-          // (`touchSatrtFunc：${e.message}`);
-        }
-      };
-      if (!this.ontouchmove) {
-        // touchstart事件
-        document.addEventListener('touchstart', touchSatrtFunc, false);
-        this.ontouchmove = function (ev) {
-          const ss = document.querySelector('.scroll');
-          const point = ev.touches[0];
-          const top = ss.scrollTop;
-          // 什么时候到底部
-          const bottomFaVal = ss.scrollHeight - ss.offsetHeight;
-          // 到达顶端
-          if (top <= 0) {
-            // 阻止向下滑动
-            if (point.clientY > startY) {
-              ev.preventDefault();
-            } else {
-              // 阻止冒泡
-              // 正常执行
-              ev.stopPropagation();
-            }
-          } else if (top === bottomFaVal) {
-            // 到达底部
-            // 阻止向上滑动
-            if (point.clientY < startY) {
-              ev.preventDefault();
-            } else {
-              // 阻止冒泡
-              // 正常执行
-              ev.stopPropagation();
-            }
-          } else if (top > 0 && top < bottomFaVal) {
-            ev.stopPropagation();
-          } else {
-            ev.preventDefault();
-          }
-        };
-      } else {
-        document.querySelector('.allow-touchmove') && document.querySelector('.allow-touchmove').removeEventListener('touchmove', this.ontouchmove);
-      }
-      document.querySelector('.allow-touchmove') && document.querySelector('.allow-touchmove').addEventListener('touchmove', this.ontouchmove);
+      util.init();
     },
     components: { BarCircle, Loading },
     methods: {
@@ -186,11 +110,13 @@
       left: 50px;
       width: 200px;
       height: 280px;
+      z-index: 2;
     }
     #signature {
       background: url('images/signature.gif') no-repeat;
       background-size: cover;
       position: absolute;
+      z-index: 2;
       top: 400px;
       left: 250px;
       width: 100px;
@@ -266,8 +192,98 @@
     }
     #long {
       position: absolute;
-      left: 400px;
-      top: 200px;
+      left: 0px;
+      top: 50px;
+      z-index: 1;
+      .long1 {
+        stroke-dasharray: 1225;
+        stroke-dashoffset: -1225;
+        fill: none;
+        stroke: black;
+        opacity: 0.1;
+        &.done {
+          stroke-dashoffset: 0;
+          fill: black;
+        }
+      }
+      .long2 {
+        stroke-dasharray: 1911;
+        stroke-dashoffset: -1911;
+        fill: none;
+        stroke: black;
+        opacity: 0.1;
+        &.done {
+          stroke-dashoffset: 0;
+          fill: black;
+        }
+      }
+    }
+
+    @media screen and (min-width: 415px) {
+      #long {
+        position: absolute;
+        left: auto;
+        right: 400px;
+        top: 100px;
+        z-index: 1;
+        .long1, .long2 {
+          opacity: 1;
+        }
+        .long1{
+          animation: alive3 10s infinite;
+          opacity: 1;
+        }
+        .long2 {
+          animation: alive4 10s infinite;
+          opacity: 1;
+        }
+      }
+    }
+  }
+  @keyframes alive3 {
+    0% {
+      stroke-dasharray: 1225;
+      fill: none;
+      stroke: #FFF;
+      stroke-dashoffset: -1225;
+    }
+    65% {
+      fill: none;
+    }
+    70% {
+      stroke-dasharray: 1225;
+      stroke-dashoffset: 0;
+      fill: #FFF;
+      stroke: #FFF;
+    }
+    100% {
+      stroke-dasharray: 1225;
+      stroke-dashoffset: 0;
+      fill: #FFF;
+      stroke: #FFF;
+    }
+  }
+  @keyframes alive4 {
+    0% {
+      stroke-dasharray: 1911;
+      fill: none;
+      stroke: #FFF;
+      stroke-dashoffset: -1911;
+    }
+    65% {
+      fill: none;
+    }
+    70% {
+      stroke-dasharray: 1911;
+      fill: #FFF;
+      stroke: #FFF;
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dasharray: 1911;
+      fill: #FFF;
+      stroke: #FFF;
+      stroke-dashoffset: 0;
     }
   }
 </style>

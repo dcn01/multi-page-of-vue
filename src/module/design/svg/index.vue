@@ -178,6 +178,7 @@
 <script>
   import 'src/common/css/index.css';
   import Paper from 'src/components/Paper/Index.vue';
+  import util from 'src/common/js/util.js';
 
   export default {
     name: 'Index',
@@ -191,23 +192,7 @@
       };
     },
     created() {
-      /* Rem 核心实现 */
-      (function (doc, win) {
-        const docEl = doc.documentElement;
-        const clientWidth = docEl.clientWidth;
-        const resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize';
-        const recalc = function () {
-          if (clientWidth === undefined) return;
-          if (clientWidth >= 414) {
-            docEl.style.fontSize = '20px';
-            return;
-          }
-          docEl.style.fontSize = `${20 * (clientWidth / 375)}px`;
-        };
-        if (doc.addEventListener === undefined) return;
-        win.addEventListener(resizeEvt, recalc, false);
-        doc.addEventListener('DOMContentLoaded', recalc, false);
-      }(document, window));
+      util.init();
     },
     components: { Paper },
     methods: {

@@ -32,6 +32,7 @@ module.exports = {
     "consistent-return": 0,// return 后面是否允许省略
     "func-names": 0,// 函数表达式必须有名字
     "import/no-extraneous-dependencies": 0,
+    "import/extensions": 0,
     "import/no-unresolved": 0,
     // // allow async-await
     // 'generator-star-spacing': 0,
