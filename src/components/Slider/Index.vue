@@ -83,6 +83,9 @@ export default {
       X = moveEndX - startX;
       if (X === 0) {
         this.dataSource[this.index].onClick && this.dataSource[this.index].onClick();
+        if (this.dataSource[this.index].href) {
+          window.location.href = this.dataSource[this.index].href;
+        }
         return;
       }
       rate = 8;
@@ -102,6 +105,8 @@ export default {
       }
     }, false);
   },
+  updated() {
+  },
   methods: {
     leftHandle(swiper, olderX, time) {
       if (this.index === 0) {
@@ -116,7 +121,10 @@ export default {
         swiper.style.transform = 'translateX(0px)';
         swiper.style.transition = '';
         if (this.autoplay) {
-          this.autorun();
+          clearInterval(this.interval);
+          if (this.autoplay) {
+            this.autorun();
+          }
         }
       }, time < 200 ? time : 200);
     },
@@ -133,7 +141,10 @@ export default {
         swiper.style.transform = 'translateX(0px)';
         swiper.style.transition = '';
         if (this.autoplay) {
-          this.autorun();
+          clearInterval(this.interval);
+          if (this.autoplay) {
+            this.autorun();
+          }
         }
       }, time < 200 ? time : 200);
     },

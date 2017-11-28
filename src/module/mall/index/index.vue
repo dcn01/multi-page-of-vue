@@ -3,8 +3,7 @@
     <div class="page-index">
       <div class="body scroll">
         <div class="background"></div>
-
-        <slider class="banner" :dataSource="imgData"/>
+        <slider v-if="imgData.length" class="banner" :autoplay="true" :dataSource="imgData"/>
         <svg class="arc" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 375 10" preserveAspectRatio="xMinYMin meet">
           <path fill="#ec1e70" d="M 0,0 Q 187.5,15 375,0 v80 h -375 Z"></path>
         </svg>
@@ -203,45 +202,19 @@
         active: 2,
         isLoading: false,
         barClose: false,
-        imgData: [
-          {
-            image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510664434198&di=2d0793ceb9fdfb3b0286259009898994&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0199b35785d16e0000018c1b27c982.jpg%40900w_1l_2o_100sh.jpg',
-            onClick: () => {
-              alert(1);
-            },
-          },
-          {
-            image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510664883028&di=96c7f63fa948333e2ff145d8083923ca&imgtype=0&src=http%3A%2F%2Feasyread.ph.126.net%2FoNfV0itGTbiLV6IRDhtcDw%3D%3D%2F7917040072873497106.jpg',
-            onClick: () => {
-              alert(2);
-            },
-          },
-          {
-            image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510664627288&di=4239b5744fd5715001f8efc9a216fe0c&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F16%2F99%2F84%2F27k58PIC7eg_1024.jpg',
-            onClick: () => {
-              alert(3);
-            },
-            url: '',
-          },
-          {
-            image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510664627288&di=4239b5744fd5715001f8efc9a216fe0c&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F16%2F99%2F84%2F27k58PIC7eg_1024.jpg',
-            onClick: () => {
-              alert(3);
-            },
-            url: '',
-          },
-          {
-            image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510664627288&di=4239b5744fd5715001f8efc9a216fe0c&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F16%2F99%2F84%2F27k58PIC7eg_1024.jpg',
-            onClick: () => {
-              alert(3);
-            },
-            url: '',
-          },
-        ],
+        imgData: [],
       };
     },
     created() {
       util.init();
+      window.wilddog.initializeApp({
+        syncURL: 'https://ws2016.wilddogio.com',
+      });
+      const query = window.wilddog.sync().ref('index/sliders');
+      query.on('value', snapshot => {
+        console.log(snapshot.val());
+        this.imgData = snapshot.val();
+      });
     },
     components: { slider },
     mounted() {
