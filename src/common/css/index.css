@@ -1,5 +1,7 @@
 @import 'animations/fade.css';
 @import "animations/move.css";
+@import "animations/scale.css";
+@import "animations/zoom.css";
 @reset-global mobile;
 body,html {
 	font-family: Lato,Helvetica Neue,"Hiragino Sans GB","Microsoft YaHei","微软雅黑",STHeiti,"WenQuanYi Micro Hei",SimSun,sans-serif,Arial;

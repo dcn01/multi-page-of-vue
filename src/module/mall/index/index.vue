@@ -1,159 +1,77 @@
 <template xmlns="http://www.w3.org/1999/html">
   <div>
-    <div class="page-index">
-      <div class="body scroll">
-        <div class="background"></div>
-        <slider v-if="imgData.length" class="banner" :autoplay="true" :dataSource="imgData"/>
-        <svg class="arc" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 375 10" preserveAspectRatio="xMinYMin meet">
-          <path fill="#ec1e70" d="M 0,0 Q 187.5,15 375,0 v80 h -375 Z"></path>
-        </svg>
-        <div class="categorys">
-          <div class="category-box">
-            <img src="./images/hees.jpg" class="category yellow">
-            </img>
-            <div class="title">HKES</div>
-          </div>
-          <div class="category-box">
-            <img src="./images/ball.jpg" class="category yellow">
-            </img>
-            <div class="title">BALL</div>
-          </div>
-          <div class="category-box">
-            <img src="./images/start.jpg" class="category yellow">
-            </img>
-            <div class="title">START</div>
-          </div>
-          <div class="category-box">
-            <img src="./images/flower.jpg" class="category yellow">
-            </img>
-            <div class="title">FLOWER</div>
-          </div>
-          <div class="category-box">
-            <img src="./images/tree.jpg" class="category yellow">
-            </img>
-            <div class="title">TREE</div>
-          </div>
-        </div>
-        <div class="category-cards">
-          <div class="title">双11专属会场</div>
-          <div class="cards">
-            <div class="card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="80"version="1.1" viewBox="0 0 82.25 10" preserveAspectRatio="xMinYMin meet">
-                <defs>
-                  <linearGradient id="gradientColor1" x1="0%" y1="100%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#ff718c;
-                  stop-opacity:1"/>
-                  <stop offset="100%" style="stop-color:#fe47d7;
-                  stop-opacity:1"/>
-                  </linearGradient>
-                </defs>
-                <path fill="url(#gradientColor1)" d="M 0,0 q 10,15 20,15  l 42.25,0 q 10,0 20,-15 v 50 h -82.25 z  "></path>
-              </svg>
-              <img src="./images/3c.jpg" alt=""/>
-              <div class="card-title">酷玩3C</div>
-              <div class="card-desc">智能生活</div>
-            </div>
-            <div class="card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="80"version="1.1" viewBox="0 0 82.25 10" preserveAspectRatio="xMinYMin meet">
-                <defs>
-                  <linearGradient id="gradientColor2" x1="0%" y1="100%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#2ebfee;
-                  stop-opacity:1"/>
-                  <stop offset="100%" style="stop-color:#27dbb4;
-                  stop-opacity:1"/>
-                  </linearGradient>
-                </defs>
-                <path fill="url(#gradientColor2)" d="M 0,0 q 10,15 20,15  l 42.25,0 q 10,0 20,-15 v 50 h -82.25 z  "></path>
-              </svg>
-              <img src="./images/3c.jpg" alt=""/>
-              <div class="card-title">运动鞋服</div>
-              <div class="card-desc">疯抢百元券</div>
-            </div>
-            <div class="card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="80"version="1.1" viewBox="0 0 82.25 10" preserveAspectRatio="xMinYMin meet">
-                <defs>
-                  <linearGradient id="gradientColor3" x1="0%" y1="100%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#ff4dc5;
-                  stop-opacity:1"/>
-                  <stop offset="100%" style="stop-color:#ff688b;
-                  stop-opacity:1"/>
-                  </linearGradient>
-                </defs>
-                <path fill="url(#gradientColor3)" d="M 0,0 q 10,15 20,15  l 42.25,0 q 10,0 20,-15 v 50 h -82.25 z  "></path>
-              </svg>
-              <img src="./images/3c.jpg" alt=""/>
-              <div class="card-title">电脑办公</div>
-              <div class="card-desc">分期免息</div>
-            </div>
-            <div class="card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="80"version="1.1" viewBox="0 0 82.25 10" preserveAspectRatio="xMinYMin meet">
-                <defs>
-                  <linearGradient id="gradientColor4" x1="0%" y1="100%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#8e79f8;
-                  stop-opacity:1"/>
-                  <stop offset="100%" style="stop-color:#47b5f2;
-                  stop-opacity:1"/>
-                  </linearGradient>
-                </defs>
-                <path fill="url(#gradientColor4)" d="M 0,0 q 10,15 20,15  l 42.25,0 q 10,0 20,-15 v 50 h -82.25 z  "></path>
-              </svg>
-              <img src="./images/3c.jpg" alt=""/>
-              <div class="card-title">手机周边</div>
-              <div class="card-desc">跨品类满减</div>
+    <transition name="fade">
+    <div class="page-index" v-show="!isLoading">
+      <transition name="zoom">
+        <div class="body scroll" v-show="navSelected == 'index'">
+          <div class="background" :style="`background: #aa0525 url(${background}) no-repeat;`"></div>
+          <slider v-if="sliders.length" class="banner" :autoplay="true" :dataSource="sliders"/>
+          <svg class="arc" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 375 10" preserveAspectRatio="xMinYMin meet">
+            <path fill="#ec1e70" d="M 0,0 Q 187.5,15 375,0 v80 h -375 Z"></path>
+          </svg>
+          <div class="categorys">
+            <div v-for="category in categorys" class="category-box" @click="gotoUrl(category.href)">
+              <img :src="category.image" class="category">
+              </img>
+              <div class="title">{{category.title}}</div>
             </div>
           </div>
-          <div class="cards">
-            <div class="card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="80"version="1.1" viewBox="0 0 82.25 10" preserveAspectRatio="xMinYMin meet">
-                <path fill="url(#gradientColor4)" d="M 0,0 q 10,15 20,15  l 42.25,0 q 10,0 20,-15 v 50 h -82.25 z  "></path>
-              </svg>
-              <img src="./images/3c.jpg" alt=""/>
-              <div class="card-title">家居百货</div>
-              <div class="card-desc">抢券减百元</div>
+          <div v-for="hotProduct in hotProducts" class="category-cards">
+            <div class="title">{{hotProduct.title}}</div>
+            <div class="cards">
+              <div v-if="index < 4" v-for="(item,index) in hotProduct.list" class="card" @click="gotoProduct(item)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="80"version="1.1" viewBox="0 0 82.25 10" preserveAspectRatio="xMinYMin meet">
+                  <defs>
+                    <linearGradient :id="`gradientColor${index}`" x1="0%" y1="100%" x2="100%" y2="100%">
+                    <stop offset="0%" :style="`stop-color:#${colors[index].start};
+                    stop-opacity:1`"/>
+                    <stop offset="100%" :style="`stop-color:#${colors[index].end};
+                    stop-opacity:1`"/>
+                    </linearGradient>
+                  </defs>
+                  <path :fill="`url(#gradientColor${index})`" d="M 0,0 q 10,15 20,15  l 42.25,0 q 10,0 20,-15 v 50 h -82.25 z  "></path>
+                </svg>
+                <img :src="item.image" alt=""/>
+                <div class="card-title">{{item.title}}</div>
+                <div class="card-desc">{{item.subTitle}}</div>
+              </div>
             </div>
-            <div class="card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="80"version="1.1" viewBox="0 0 82.25 10" preserveAspectRatio="xMinYMin meet">
-                <defs>
-                  <linearGradient id="gradientColor5" x1="0%" y1="100%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#fc8d3c;
-                  stop-opacity:1"/>
-                  <stop offset="100%" style="stop-color:#feb034;
-                  stop-opacity:1"/>
-                  </linearGradient>
-                </defs>
-                <path fill="url(#gradientColor5)" d="M 0,0 q 10,15 20,15  l 42.25,0 q 10,0 20,-15 v 50 h -82.25 z  "></path>
-              </svg>
-              <img src="./images/3c.jpg" alt=""/>
-              <div class="card-title">精品家具</div>
-              <div class="card-desc">买1赠1</div>
-            </div>
-            <div class="card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="80"version="1.1" viewBox="0 0 82.25 10" preserveAspectRatio="xMinYMin meet">
-                <defs>
-                  <linearGradient id="gradientColor6" x1="0%" y1="100%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#998bfd;
-                  stop-opacity:1"/>
-                  <stop offset="100%" style="stop-color:#c09cfe;
-                  stop-opacity:1"/>
-                  </linearGradient>
-                </defs>
-                <path fill="url(#gradientColor6)" d="M 0,0 q 10,15 20,15  l 42.25,0 q 10,0 20,-15 v 50 h -82.25 z  "></path>
-              </svg>
-              <img src="./images/3c.jpg" alt=""/>
-              <div class="card-title">童装会场</div>
-              <div class="card-desc">抢大牌券</div>
-            </div>
-            <div class="card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="80"version="1.1" viewBox="0 0 82.25 10" preserveAspectRatio="xMinYMin meet">
-                <path fill="url(#gradientColor2)" d="M 0,0 q 10,15 20,15  l 42.25,0 q 10,0 20,-15 v 50 h -82.25 z  "></path>
-              </svg>
-              <img src="./images/3c.jpg" alt=""/>
-              <div class="card-title">运动健身</div>
-              <div class="card-desc">大牌29元起</div>
+            <div class="cards">
+              <div class="card" v-if="index > 3" v-for="(item,index) in hotProduct.list" @click="gotoProduct(item)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="80"version="1.1" viewBox="0 0 82.25 10" preserveAspectRatio="xMinYMin meet">
+                  <defs>
+                    <linearGradient :id="`gradientColor${index}`" x1="0%" y1="100%" x2="100%" y2="100%">
+                    <stop offset="0%" :style="`stop-color:#${colors[index].start};
+                    stop-opacity:1`"/>
+                    <stop offset="100%" :style="`stop-color:#${colors[index].end};
+                    stop-opacity:1`"/>
+                    </linearGradient>
+                  </defs>
+                  <path :fill="`url(#gradientColor${index})`" d="M 0,0 q 10,15 20,15  l 42.25,0 q 10,0 20,-15 v 50 h -82.25 z  "></path>
+                </svg>
+                <img :src="item.image" alt=""/>
+                <div class="card-title">{{item.title}}</div>
+                <div class="card-desc">{{item.subTitle}}</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </transition>
+      <transition name="fade">
+        <div class="body scroll" style="min-height: 1000px;" v-show="navSelected == 'like'">
+          <div class="cells">
+            <div :class="`cell ${index%2 == 1 ? 'mid' : ''}`" v-for="product,index in history">
+              <img :src="product.image" alt=""/>
+              <div class="title">{{product.title}}</div>
+              <div class="subtitle">{{product.subTitle}}</div>
+            </div>
+            <div v-if="history.length%3 > 0 && history.length%3 < 3" :class="`cell ${history.length%2 == 0 ? '' : 'mid' }`">
+            </div>
+            <div v-if="history.length%3 > 0 && history.length%3 < 2" :class="`cell ${history.length%2 !== 0 ? '' : 'mid' }`">
+            </div>
+          </div>
+        </div>
+      </transition>
       <footer>
         <svg class="circle" xmlns="http://www.w3.org/2000/svg" version="1.1" width="60" height="30">
           <defs>
@@ -167,24 +85,17 @@
           </defs>
           <path fill="url(#pink_white)"  d="M 0,30 C 10,0 50,0 60,30 "></path>
         </svg>
-        <div class="wave">
+        <div class="wave" @click="gotoUrl(active.href)">
           <div class="w1"></div>
-          <div class="title">11.11<br/>全球狂欢节</div>
+          <div class="title">{{active.title}}<br/>{{active.subTitle}}</div>
         </div>
-        <div class="iconfont icon-index">
-          <div class="title">精选</div>
-        </div>
-        <div class="iconfont icon-like">
-          <div class="title">喜欢</div>
-        </div>
-        <div class="iconfont icon-cart">
-          <div class="title">购物车</div>
-        </div>
-        <div class="iconfont icon-mine">
-          <div class="title">我</div>
+        <div v-for="nav in navigation" :class="`iconfont icon-${nav.icon}${nav.icon == navSelected ? '-fill' : ''}`" @click="() => { 
+          if(nav.href) { gotoUrl(nav.href);} window.scrollTo(0, 0); navSelected = nav.icon }">
+          <div class="title">{{nav.desc}}</div>
         </div>
       </footer>
     </div>
+    </transition>
   </div>
 </template>
 <script>
@@ -192,17 +103,59 @@
   import 'src/common/css/mall.css';
   import util from 'src/common/js/util.js';
   import slider from 'src/components/Slider/Index.vue';
+  import Fingerprint from 'fingerprintjs';// eslint-disabled-line
 
   export default {
     name: 'Index',
     data() {
       return {
+        navSelected: 'index',
+        history: [],
+        background: '',
         init: false,
         percent: 0,
+        fingerprint: new Fingerprint().get(),
         active: 2,
-        isLoading: false,
+        isLoading: true,
         barClose: false,
-        imgData: [],
+        sliders: [],
+        categorys: [],
+        hotProducts: [],
+        navigation: [],
+        colors: [
+          {
+            start: 'ff718c',
+            end: 'fe47d7',
+          },
+          {
+            start: '2ebfee',
+            end: '27dbb4',
+          },
+          {
+            start: 'ff4dc5',
+            end: 'ff688b',
+          },
+          {
+            start: '8e79f8',
+            end: '47b5f2',
+          },
+          {
+            start: '8e79f8',
+            end: '47b5f2',
+          },
+          {
+            start: 'fc8d3c',
+            end: 'feb034',
+          },
+          {
+            start: '998bfd',
+            end: 'c09cfe',
+          },
+          {
+            start: '2ebfee',
+            end: '27dbb4',
+          },
+        ],
       };
     },
     created() {
@@ -210,14 +163,28 @@
       window.wilddog.initializeApp({
         syncURL: 'https://ws2016.wilddogio.com',
       });
-      const query = window.wilddog.sync().ref('index/sliders');
-      query.on('value', snapshot => {
-        console.log(snapshot.val());
-        this.imgData = snapshot.val();
+      const queryIndex = window.wilddog.sync().ref('index');
+      queryIndex.on('value', snapshot => {
+        this.isLoading = false;
+        const indexData = snapshot.val();
+        this.sliders = indexData.sliders;
+        this.categorys = indexData.categorys;
+        this.hotProducts = indexData.hotProducts;
+        this.navigation = indexData.navigation;
+        this.active = indexData.active;
+        this.background = indexData.background;
+      });
+      const queryUser = window.wilddog.sync().ref(`users/${this.fingerprint}`);
+      queryUser.on('value', snapshot => {
+        this.history = snapshot.val() || [];
       });
     },
     components: { slider },
     mounted() {
+      // const array = [];
+      // array[0] = 'a';
+      // array[1] = 'b';
+      // window.wilddog.sync().ref('users').child(this.fingerprint).set(array);// eslint-disabled-line
     },
     methods: {
       loaded(isLoading) {
@@ -225,6 +192,13 @@
       },
       showBar(barClose) {
         this.barClose = barClose;
+      },
+      gotoProduct(product) {
+        this.history = this.history.filter(item => item.title !== product.title);
+        console.log(this.history);
+        this.history.push(product);
+        window.wilddog.sync().ref('users').child(this.fingerprint).set(this.history);
+        location.href = product.href || '';
       },
       gotoUrl(url) {
         location.href = url;
@@ -235,7 +209,6 @@
 <style>
   .page-index {
     .body {
-      height: 1000px;
       background: #ec1e70;
       position: absolute;
       width: 100%;
@@ -243,8 +216,7 @@
       font-size: 10px;
       z-index: 3;
       .background {
-        background: #aa0525 url(./images/background.jpg) no-repeat;
-        background-size: cover;
+        background-size: cover!important;
         height: 300px;
         width: 375px;
       }
@@ -259,10 +231,10 @@
         top: -20px;
       }
       .categorys {
-        position: absolute;
+        position: relative;
         padding: 0 10px;
         width: 100%;
-        top: 310px;
+        top: -90px;
         display: flex;
         z-index: 3;
         .category-box {
@@ -281,6 +253,7 @@
           .category {
             display: inline-block;
             size: 40px 40px;
+            background: #fff;
             border-radius: 50%;
             .title {
               color: #fff;
@@ -309,10 +282,10 @@
         }
       }
       .category-cards {
-        position: absolute;
+        position: relative;
         padding: 0 10px;
         width: 100%;
-        top: 390px;
+        top: -40px;
         z-index: 3;
         padding: 30px 10px;
         margin: auto;
@@ -359,12 +332,42 @@
               left: 0;
               right: 0;
               text-align: center;
-              font-size: 10px;
+              font-size: 8px;
             }
             .card-desc {
               bottom: 5px;
-              font-size: 9px;
+              font-size: 7px;
             }
+          }
+        }
+      }
+      .cells {
+        .cell {
+          height: 125px;
+          background: #fff;
+          position: relative;
+          float: left;
+          width: 125px;
+          &.mid {
+            background: #f5f9f8;
+          }
+          img {
+            size: 80px 80px;
+            position: absolute;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+          }
+          .title, .subtitle {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 85px;
+            color: #ec1e70;
+          }
+          .subtitle {
+            position: absolute;
+            top: 100px;
           }
         }
       }
@@ -420,24 +423,22 @@
       }
       .iconfont {
         color: #fff;
-      }
-      .icon-index, .icon-like, .icon-cart, .icon-mine {
         position: absolute;
         top: 8px;
         .title {
           font-size: 9px;
         }
       }
-      .icon-index {
+      .icon-index, .icon-index-fill {
         left: 30px;
       }
-      .icon-like {
+      .icon-like, .icon-like-fill {
         left: 100px;
       }
-      .icon-cart {
+      .icon-cart, .icon-cart-fill {
         right: 100px;
       }
-      .icon-mine {
+      .icon-mine, .icon-mine-fill {
         right: 30px;
       }
     }

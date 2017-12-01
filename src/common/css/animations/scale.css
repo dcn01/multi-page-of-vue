@@ -11,8 +11,8 @@
     transform: scaleY(1);
   }
 }
-.scaleDown-enter {
-  animation: scaleDown-enter both;
+.scaleDown-enter-active {
+  animation: scaleDown-enter 1s ease-in;
 }
 
 @keyframes scaleDown-leave {
@@ -27,6 +27,6 @@
     transform:scaleY(.8);
   }
 }
-.scaleDown-leave {
-  animation: scaleDown-leave both;
+.scaleDown-leave-active {
+  animation: scaleDown-leave 1s ease-in;
 }

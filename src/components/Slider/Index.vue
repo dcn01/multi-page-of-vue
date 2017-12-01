@@ -160,6 +160,7 @@ export default {
 <style>
 .swiper {
   position: relative;
+  overflow: hidden;
   width: 100%;
   .swiper-wapper {
     min-height: 110px;
