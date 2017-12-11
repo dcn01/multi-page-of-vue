@@ -22,7 +22,7 @@ body,html {
     padding: 5px 10px;
   }
   .sub-title {
-    line-height: 30px;
+    line-height: 30px;  
   }
   .text {
     border-left:2px solid orange;
@@ -31,6 +31,8 @@ body,html {
     font-style: italic;
     color: #eee;
     background: rgba(255,255,255,.1);
+    margin: 0 0!important;
+    margin-top: 0;
   }
   a {
 		color: #bdfb06;

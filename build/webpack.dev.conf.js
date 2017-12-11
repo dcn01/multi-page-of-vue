@@ -10,6 +10,7 @@ var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
 })
+var StyleLintPlugin = require('stylelint-webpack-plugin');
 
 baseWebpackConfig.module.rules.push({
   test: /\.(js|vue)$/,
@@ -30,6 +31,9 @@ webpackConfig.plugins = webpackConfig.plugins.concat([
   // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
-  new FriendlyErrorsPlugin()
+  new FriendlyErrorsPlugin(),
+  new StyleLintPlugin({
+    files: ['../src/common/css/*.css']
+  }),
 ])
 module.exports = webpackConfig

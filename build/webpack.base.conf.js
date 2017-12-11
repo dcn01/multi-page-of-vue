@@ -55,7 +55,7 @@ var webpackConfig = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         query: {
-          limit: 15000,
+          limit: 50000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]'),
           publicPath:'/',
         }

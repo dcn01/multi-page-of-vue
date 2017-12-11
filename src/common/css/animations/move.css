@@ -9,7 +9,7 @@
   }
 }
 .moveUp-enter-active {
-  animation: moveUp-enter .3s ease-in;
+  animation: moveUp-enter .4s ease-in;
 }
 
 @keyframes moveUp-leave {
@@ -21,7 +21,7 @@
   }
 }
 .moveUp-leave-active {
-  animation: moveUp-leave .3s ease-out;
+  animation: moveUp-leave .4s ease-out;
 }
 
 /* moveDown */
@@ -36,7 +36,7 @@
   }
 }
 .moveDown-enter-active {
-  animation: moveDown-enter .3s ease-in;
+  animation: moveDown-enter .4s ease-in;
 }
 
 @keyframes moveDown-leave {
@@ -48,7 +48,7 @@
   }
 }
 .moveDown-leave-active {
-  animation: moveDown-leave .3s ease-out;
+  animation: moveDown-leave .4s ease-out;
 }
 
 /* moveLeft */
@@ -61,7 +61,7 @@
   }
 }
 .moveLeft-enter-active {
-  animation: moveLeft-enter .3s ease-in;
+  animation: moveLeft-enter .4s ease-in;
 }
 
 @keyframes moveLeft-leave {
@@ -73,7 +73,7 @@
   }
 }
 .moveLeft-leave-active {
-  animation: moveLeft-leave .3s ease-out;
+  animation: moveLeft-leave .4s ease-out;
 }
 
 /* moveRight */
@@ -86,7 +86,7 @@
   }
 }
 .moveRight-enter-active {
-  animation: moveRight-enter .3s ease-in;
+  animation: moveRight-enter .4s ease-in;
 }
 
 @keyframes moveRight-leave {
@@ -98,5 +98,5 @@
   }
 }
 .moveRight-leave-active {
-  animation: moveRight-leave .3s ease-out;
+  animation: moveRight-leave .4s ease-out;
 }
