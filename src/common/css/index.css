@@ -31,8 +31,6 @@ body,html {
     font-style: italic;
     color: #eee;
     background: rgba(255,255,255,.1);
-    margin: 0 0!important;
-    margin-top: 0;
   }
   a {
 		color: #bdfb06;

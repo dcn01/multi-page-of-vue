@@ -207,6 +207,7 @@
   };
 </script>
 <style>
+  /* stylelint-disable */
   .page-index {
     .body {
       background: #ec1e70;
@@ -483,4 +484,5 @@
       transform: scale(1);
     }
   }
+  /* stylelint-enable */
 </style>

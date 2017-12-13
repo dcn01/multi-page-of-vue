@@ -209,6 +209,7 @@
   };
 </script>
 <style>
+  /* stylelint-disable */
   .page-svg {
     padding-bottom: 10px;
     max-width: 950Px;
@@ -242,4 +243,5 @@
         stroke-dashoffset: 62.8px;
     } 
   }
+  /* stylelint-enable */
 </style>

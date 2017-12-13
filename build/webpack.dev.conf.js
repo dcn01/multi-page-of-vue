@@ -10,7 +10,7 @@ var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
 })
-var StyleLintPlugin = require('stylelint-webpack-plugin');
+// var StyleLintPlugin = require('stylelint-webpack-plugin');
 
 baseWebpackConfig.module.rules.push({
   test: /\.(js|vue)$/,
@@ -32,8 +32,12 @@ webpackConfig.plugins = webpackConfig.plugins.concat([
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
   new FriendlyErrorsPlugin(),
-  new StyleLintPlugin({
-    files: ['../src/common/css/*.css']
-  }),
+  // new StyleLintPlugin({
+  //   config: {
+  //     // 你的lint扩展自刚刚安装的stylelint-config-standard
+  //     "extends": "stylelint-config-standard"
+  //   },
+  //   files: '../src/common/css/*.css'
+  // }),
 ])
 module.exports = webpackConfig

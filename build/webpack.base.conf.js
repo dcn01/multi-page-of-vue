@@ -3,7 +3,7 @@ var config = require('../config')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
-var vueLoaderConfig = require('./vue-loader.conf')
+// var vueLoaderConfig = require('./vue-loader.conf')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var entries = utils.getEntry(['./src/module/**/**/*.js']); // 获得入口js文件
 function resolve (dir) {
@@ -11,11 +11,6 @@ function resolve (dir) {
 }
 
 var env = process.env.NODE_ENV
-// check env & config/index.js to decide weither to enable CSS Sourcemaps for the
-// various preprocessor loaders added to vue-loader at the end of this file
-var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap)
-var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap)
-var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 
 var webpackConfig = {
   entry: entries,
@@ -40,8 +35,24 @@ var webpackConfig = {
         options: {
           loaders:{
             css: ExtractTextPlugin.extract({
-              use: 'css-loader?discardComments: {removeAll: true}',
-              fallback: 'vue-style-loader'
+              // use: 'css-loader?discardComments: {removeAll: true}',
+              use: [
+                {
+                  loader: 'css-loader',
+                  options: {
+                    discardComments: {removeAll: true},
+                    minimize: true,
+                    sourceMap: true
+                  }
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true
+                  }
+                }
+              ],
+              fallback: 'vue-style-loader',
             }),
           }
         }
@@ -70,15 +81,18 @@ var webpackConfig = {
       },
       {
         test: /\.css$/,
-        // "use":[
-        //   "style-loader",
-        //   "vue-style-loader",
-        //   {"loader":"css-loader?discardComments: {removeAll: true}","options":{"sourceMap":false}},
-        //   "postcss-loader"
-        // ]
-        loader: ExtractTextPlugin.extract({
-          use: 'css-loader?discardComments: {removeAll: true}!postcss-loader',
-          fallback: 'style-loader'
+        use: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                discardComments: {removeAll: true},
+                minimize: true,
+              }
+            },
+            'postcss-loader'
+          ],
+          fallback: 'style-loader',
         })
       }
     ]

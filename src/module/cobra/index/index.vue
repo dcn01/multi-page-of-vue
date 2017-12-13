@@ -232,6 +232,7 @@
   };
 </script>
 <style>
+  /* stylelint-disable */
   #wrapper {
     position: fixed;
     top: 0;
@@ -616,4 +617,5 @@
       }    
     }
   }
+  /* stylelint-enable */
 </style>
