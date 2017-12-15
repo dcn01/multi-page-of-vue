@@ -35,7 +35,7 @@ module.exports = {
     "number-leading-zero": null,
     "at-rule-empty-line-before": null,
     "selector-list-comma-newline-after": null,
-    "indentation": [2, { 
+    "indentation": [ null, { 
         "severity": "error",
         "message": "Please use 211 spaces for indentation. Tabs make The Architect grumpy.",
     } ],

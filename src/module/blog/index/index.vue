@@ -3,8 +3,8 @@
     <div class="page-index">
       <transition name="moveDown">
         <div v-show="!init" id="nav">
-          <div class="logo" @click="page = 'index'"></div>
-          <div class="header">
+          <div id="logo" class="logo" @click="page = 'index'"></div>
+          <div id="header" class="header">
             <div :class="`href STEPS ${page == 'steps' ? 'active' : ''}`" @click="page = 'steps'"></div>
             <div :class="`href BRANDS ${page == 'brands' ? 'active' : ''}`" @click="page = 'brands'"></div>
             <div :class="`href RESOURCE ${page == 'resource' ? 'active' : ''}`" @click="page = 'resource'"></div>
@@ -13,7 +13,7 @@
         </div>
       </transition>
       <transition name="fade">
-        <div class="index" v-show="!init && page == 'index'">
+        <div id="index" class="index" v-show="!init && page == 'index'">
           <div class="row">
             <div class="content1">
               <img class="hidden" src="./images/steps.jpg" alt="">
@@ -425,28 +425,6 @@
         this.init = false;
       }, 100);
       util.init();
-      document.addEventListener('scroll', () => {
-        const scrollTop = document.documentElement.scrollTop;
-        const nav = document.getElementById('nav');
-        if (scrollTop > 0 && scrollTop <= 60) {
-          nav.style.height = '182px';
-        } else if (scrollTop > 60 && scrollTop <= 80) {
-          nav.style.height = '122px';
-        } else if (scrollTop > 80) {
-          nav.style.height = '0px';
-        } else {
-          nav.style.height = '182px';
-        }
-        if (this.page === 'resource') {
-          if (scrollTop > 180) {
-            document.getElementById('resourceName').style.transform = `translateY(${scrollTop - 180}px)`;
-            document.getElementById('resourceSample').style.transform = `translateY(${scrollTop - 180}px)`;
-          } else {
-            document.getElementById('resourceName').style.transform = '';
-            document.getElementById('resourceSample').style.transform = '';
-          }
-        }
-      });
       // window.wilddog.initializeApp({
       //   syncURL: 'https://ws2016.wilddogio.com',
       // });
@@ -472,6 +450,40 @@
       // array[0] = 'a';
       // array[1] = 'b';
       // window.wilddog.sync().ref('users').child(this.fingerprint).set(array);// eslint-disabled-line
+      setTimeout(() => {
+        const height = document.getElementById('nav').offsetHeight - 2;
+        document.addEventListener('scroll', () => {
+          const scrollTop = document.documentElement.scrollTop;
+          const nav = document.getElementById('nav');
+          const logoHeight = document.getElementById('logo').offsetHeight;
+          if (scrollTop >= 0 && scrollTop <= (height - logoHeight)) {
+            nav.style.height = `${height - scrollTop}px`;
+            document.getElementById('logo').style.height = null;
+            document.getElementById('header').style.height = null;
+          } else if (scrollTop > (height - logoHeight) && scrollTop <= height) {
+            nav.style.height = `${logoHeight}px`;
+            document.getElementById('logo').style.height = null;
+            document.getElementById('header').style.height = null;
+          } else if (scrollTop > height) {
+            nav.style.height = '0px';
+            document.getElementById('logo').style.height = '0px';
+            document.getElementById('header').style.height = '0px';
+          } else {
+            document.getElementById('logo').style.height = null;
+            document.getElementById('header').style.height = null;
+            nav.style.height = `${height + 2}px`;
+          }
+          if (this.page === 'resource') {
+            if (scrollTop > height) {
+              document.getElementById('resourceName').style.transform = `translateY(${scrollTop - height}px)`;
+              document.getElementById('resourceSample').style.transform = `translateY(${scrollTop - height}px)`;
+            } else {
+              document.getElementById('resourceName').style.transform = '';
+              document.getElementById('resourceSample').style.transform = '';
+            }
+          }
+        });
+      }, 200);
     },
     methods: {
       loaded(isLoading) {
@@ -504,7 +516,6 @@
     margin: auto;
     #nav {
       background: #fff;
-      overflow: hidden;
       position: fixed;
       height: 182px;
       width: 100%;
@@ -516,16 +527,21 @@
         top: 0;
         bottom: 0;
         background: url('images/logo.png') no-repeat;
+        background-size: cover;
         size: 234px 122px;
         cursor: pointer;
       }
       .header {
+        background: #fff;
         position: absolute;
         margin: auto;
         top: 0;
         bottom: 0;
-        size: 600px 122px;
-        left: 300px;
+        left: 0;
+        right: 0;
+        size: 1105px 122px;
+        padding: 0 252.5px;
+        left: 234px;
         line-height: 122px;
         display: flex;
         .href {
@@ -592,7 +608,6 @@
       opacity: 0;
     }
     .index {
-      overflow: hidden;
       position: relative;
       z-index: 2;
       width: 100%;
@@ -928,6 +943,70 @@
     }
     100% {
       transform: rotate(0deg);
+    }
+  }
+  @media screen and (max-width: 414PX) {
+    html {
+      font-size: 6.30PX!important;
+    }
+    html, body {
+    }
+    .page-index {
+      #nav {
+        height: 250px;
+        left: 0;
+        .logo {
+          size: 412.2px 219.6px; 
+        }
+        .header {
+          display: none;
+        }
+      }
+      .index {
+        margin-top: 250px;
+        .row, .column, .content456 {
+          display: block;
+          height: auto;
+        }
+        .content1, .content2, .content4, .content5, .content6, .content7, .content8, .content9 {
+          height: 800px;
+          margin-bottom: 1px;
+          .title {
+            font-size: 80px;
+          }
+          .hidden {
+            opacity: 1;
+          }
+          .show {
+            position: absolute;
+            top: 0;
+            opacity: 0;
+          }
+        }
+        .content2 {
+          background: #02abe9;
+          .brands-entry {
+            size: 560px 560px;
+            background: #02abe9 url('images/brands-white.png') no-repeat center center;
+          }
+          margin-bottom: 1px;
+        }
+        .content3 {
+          margin-bottom: 1px;
+          height:1600px;
+          .title {
+            font-size: 80px;
+          }
+          .hidden {
+            opacity: 1;
+          }
+          .show {
+            position: absolute;
+            top: 0;
+            opacity: 0;
+          }
+        }
+      }
     }
   }
 </style>

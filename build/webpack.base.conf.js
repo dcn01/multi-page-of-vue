@@ -1,4 +1,5 @@
 var path = require('path')
+var webpack = require('webpack')
 var config = require('../config')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var utils = require('./utils')
@@ -68,7 +69,6 @@ var webpackConfig = {
         query: {
           limit: 50000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]'),
-          publicPath:'/',
         }
       },
       {
@@ -76,7 +76,7 @@ var webpackConfig = {
         loader: 'url-loader',
         query: {
           limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+          name: utils.assetsPath('fonts/[name].[hash:7].[ext]'),
         }
       },
       {
@@ -98,7 +98,26 @@ var webpackConfig = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin({filename: utils.assetsPath('css/[name].[contenthash].css'), allChunks: true})
+    new ExtractTextPlugin({filename: utils.assetsPath('css/[name].[contenthash].css'), allChunks: true}),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module, count) {
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          /\.js$/.test(module.resource) &&
+          module.resource.indexOf(
+            path.join(__dirname, '../node_modules')
+          ) === 0
+        )
+      }
+    }),
+    // extract webpack runtime and module manifest to its own file in order to
+    // prevent vendor hash from being updated whenever app bundle is updated
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      chunks: ['vendor']
+    }),
   ]
 }
 

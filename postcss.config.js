@@ -14,6 +14,6 @@ module.exports = {
 	require('autoprefixer')({
        browsers: ['last 2 versions', 'iOS 7', '> 5%', "ie 8"]
 	}),
-	require("postcss-reporter")({ clearReportedMessages: true, throwError: process.env.NODE_ENV !== 'production' })
+	require("postcss-reporter")({ clearReportedMessages: true, throwError: false })
   ]
 }
