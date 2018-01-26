@@ -1,4 +1,4 @@
-<template xmlns="http://www.w3.org/1999/html">
+<template>
   <transition name="fade">
     <div class="page-index">
       <transition name="moveDown">
@@ -67,6 +67,20 @@
               </div>
             </div>
           </div>
+        </div>
+      </transition>
+      <transition name="fade">
+        <div id="steps" class="steps" v-show="!init && page == 'steps'">
+          <div class="step"></div>
+          <div class="step"></div>
+          <div class="step"></div>
+          <div class="step"></div>
+          <div class="step"></div>
+          <div class="step"></div>
+          <div class="step"></div>
+          <div class="step"></div>
+          <div class="step"></div>
+          <div class="step"></div>
         </div>
       </transition>
       <transition name="fade">
@@ -506,9 +520,6 @@
   };
 </script>
 <style>
-  html,body {
-    background: #fff!important;
-  }
   .page-index {
     width: 1200px;
     min-height: 600px;
@@ -517,6 +528,8 @@
     #nav {
       background: #fff;
       position: fixed;
+      left: 0;
+      right: 0;
       height: 182px;
       width: 100%;
       transition: all .8s ease-out, opacity .8s ease-out;
@@ -532,7 +545,6 @@
         cursor: pointer;
       }
       .header {
-        background: #fff;
         position: absolute;
         margin: auto;
         top: 0;
@@ -752,6 +764,16 @@
         background: #fff;
         flex: 1;
         cursor: pointer;
+      }
+    }
+    .steps {
+      margin-top: 180px;
+      .step {
+        float: left;
+        size: 270px 350px;
+        background: #fff;
+        margin: 15px;
+        border-radius: 3px;
       }
     }
     .resource {
