@@ -114,7 +114,7 @@
   </div>
 </template>
 <script>
-  import '../../../common/css/cobra.css';
+  import 'src/common/css/cobra.css';
 
   export default {
     name: 'Index',

@@ -1,3 +1,7 @@
+import path from 'path';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+
+
 var path = require('path')
 var config = require('../config')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')

@@ -1,68 +1,47 @@
-var config = require('../config')
-if (!process.env.NODE_ENV) process.env.NODE_ENV = config.dev.env
-var path = require('path')
-var express = require('express')
-var webpack = require('webpack')
-var opn = require('opn')
-var proxyMiddleware = require('http-proxy-middleware')
-var webpackConfig = require('./webpack.dev.conf')
+import path from 'path';
+import express from 'express';
+import webpack from 'webpack';
+import getWebpackConfig from './webpack.dev.conf';
+import middlewareDev from 'webpack-dev-middleware';
+import hotMiddlewareHot from 'webpack-hot-middleware';
+import connectHistoryApiFallback from 'connect-history-api-fallback';
+import opn from 'opn';
 
-// default port where dev server listens for incoming traffic
-var port = process.env.PORT || config.dev.port
-// Define HTTP proxies to your custom API backend
-// https://github.com/chimurai/http-proxy-middleware
-var proxyTable = config.dev.proxyTable
-
-var app = express()
-var compiler = webpack(webpackConfig)
-
-var devMiddleware = require('webpack-dev-middleware')(compiler, {
+const webpackConfig = getWebpackConfig();
+const app = express();
+const compiler = webpack(webpackConfig);
+const devMiddleware = middlewareDev(compiler, {
   publicPath: webpackConfig.output.publicPath,
   stats: {
     colors: true,
     chunks: false
   }
-})
+});
+const hotMiddleware = hotMiddlewareHot(compiler);
+const param = process.argv.slice(2);
 
-var hotMiddleware = require('webpack-hot-middleware')(compiler)
+// mock server
 // force page reload when html-webpack-plugin template changes
 compiler.plugin('compilation', function (compilation) {
   compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-    hotMiddleware.publish({ action: 'reload' })
-    cb()
-  })
-})
-
-// proxy api requests
-Object.keys(proxyTable).forEach(function (context) {
-  var options = proxyTable[context]
-  if (typeof options === 'string') {
-    options = { target: options }
-  }
-  app.use(proxyMiddleware(context, options))
-})
-
+    hotMiddleware.publish({ action: 'reload' });
+    cb();
+  });
+});
 // handle fallback for HTML5 history API
-app.use(require('connect-history-api-fallback')())
-
+app.use(connectHistoryApiFallback());
 // serve webpack bundle output
-app.use(devMiddleware)
-
+app.use(devMiddleware);
 // enable hot-reload and state-preserving
 // compilation error display
-app.use(hotMiddleware)
-
+app.use(hotMiddleware);
 // serve pure static assets
-var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
-app.use(staticPath, express.static('./static'))
-
-app.get('/', function (req, res) {
-  res.send('Hello world!');
-});
-
-module.exports = app.listen(port, function (err) {
+app.use('/static', express.static('./static'));
+// listen 80 port
+module.exports = app.listen('80', function (err) {
   if (err) {
-    console.log(err)
-    return
+    console.log(err);
+    return;
   }
-})
+  opn(`http://localhost/${param[0]}/index.html`)
+});

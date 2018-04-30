@@ -56,7 +56,7 @@ const Util = {};
     const recalc = function () {
       if (clientWidth === undefined) return;
       if (clientWidth > 414) {
-        docEl.style.fontSize = '20px';
+        docEl.style.fontSize = `${20 * (clientWidth / 1366)}px`;
         return;
       }
       docEl.style.fontSize = `${20 * (clientWidth / 375)}px`;

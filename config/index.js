@@ -3,7 +3,7 @@ var path = require('path')
 
 module.exports = {
   build: {
-    env: require('./prod.env'),
+    env: require('./prod'),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
@@ -19,7 +19,7 @@ module.exports = {
     cssMinimize: true,
   },
   dev: {
-    env: require('./dev.env'),
+    env: require('./dev'),
     port: 80,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
