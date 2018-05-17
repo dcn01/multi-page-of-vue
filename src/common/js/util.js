@@ -57,6 +57,7 @@ const Util = {};
       if (clientWidth === undefined) return;
       if (clientWidth > 414) {
         docEl.style.fontSize = `${20 * (clientWidth / 1366)}px`;
+        // docEl.style.fontSize = '20px';
         return;
       }
       docEl.style.fontSize = `${20 * (clientWidth / 375)}px`;

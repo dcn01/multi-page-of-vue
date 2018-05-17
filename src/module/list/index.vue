@@ -1,41 +1,18 @@
 <template>
   <div>
     <transition name="fade">
-      <div class="context" v-if="originWindowWidth > 900">
+      <div class="context">
         <div class="star-red">
-          <div class="title">JavaScript</div>
-          <img src="./images/star-red-m.png" alt="">
+          <div class="title" @click="gotoUrl('/javaScript/index.html')">JavaScript</div>
         </div>
         <div class="star-yellow">
-          <div class="title">Css</div>
-          <img src="./images/star-yellow-m.png" alt="">
+          <div class="title" @click="gotoUrl('/list/index.html')">Css</div>
         </div>
         <div class="star-blue">
-          <div class="title">Java</div>
-          <img src="./images/star-blue-m.png" alt="">
+          <div class="title" @click="gotoUrl('/list/index.html')">Java</div>
         </div>
         <div class="star-orange">
-          <div class="title">Nodejs</div>
-          <img src="./images/star-orange-m.png" alt="">
-        </div>
-        <canvas id="canvas">您的浏览器不支持canvas</canvas>
-      </div>
-      <div class="context" v-else>
-        <div class="star-red">
-          <div class="title">JavaScript</div>
-          <img src="./images/star-red.png" alt="">
-        </div>
-        <div class="star-yellow">
-          <div class="title">Css</div>
-          <img src="./images/star-yellow.png" alt="">
-        </div>
-        <div class="star-blue">
-          <div class="title">Java</div>
-          <img src="./images/star-blue.png" alt="">
-        </div>
-        <div class="star-orange">
-          <div class="title">Nodejs</div>
-          <img src="./images/star-orange.png" alt="">
+          <div class="title" @click="gotoUrl('/list/index.html')">Nodejs</div>
         </div>
         <canvas id="canvas">您的浏览器不支持canvas</canvas>
       </div>
@@ -47,6 +24,14 @@
   import 'src/common/css/blog.css';
   import util from 'src/common/js/util.js';
   import slider from 'src/components/Slider/Index.vue';
+  import red from './images/star-red.png';
+  import orange from './images/star-orange.png';
+  import blue from './images/star-blue.png';
+  import yellow from './images/star-yellow.png';
+  import redM from './images/star-red-m.png';
+  import orangeM from './images/star-orange-m.png';
+  import blueM from './images/star-blue-m.png';
+  import yellowM from './images/star-yellow-m.png';
 
   export default {
     name: 'Index',
@@ -66,6 +51,35 @@
       },
     },
     created() {
+      if (this.originWindowWidth > 900) {
+        this.red = red;
+        this.orange = orange;
+        this.blue = blue;
+        this.yellow = yellow;
+      } else {
+        this.red = redM;
+        this.orange = orangeM;
+        this.blue = blueM;
+        this.yellow = yellowM;
+      }
+      this.loadImage([
+        {
+          key: 'red',
+          parent: 'star-red',
+        },
+        {
+          key: 'orange',
+          parent: 'star-orange',
+        },
+        {
+          key: 'blue',
+          parent: 'star-blue',
+        },
+        {
+          key: 'yellow',
+          parent: 'star-yellow',
+        },
+      ]);
       setTimeout(() => {
         this.init = false;
       }, 100);
@@ -76,6 +90,27 @@
       this.starsSky(this.startCount);
     },
     methods: {
+      loadImage(array) {
+        const asyncTasks = [];
+        array.forEach(item => {
+          const asyncTask = keyTmp => new Promise(resolve => {
+            const img = new Image();
+            img.src = this[`${keyTmp}`];
+            img.className = keyTmp;
+            img.parent = item.parent;
+            img.onload = () => {
+              resolve(img);
+            };
+          });
+          asyncTasks.push(asyncTask(item.key));
+        });
+        Promise.all(asyncTasks).then(imgs => {
+          imgs.forEach(img => {
+            document.querySelector(`.${img.parent}`).appendChild(img);
+          });
+          this.showBanner = true;
+        });
+      },
       starsSky(num) {
         this.num = num;
         if (this.originWindowWidth <= 900) {
@@ -186,6 +221,10 @@
           this.rnd = Math.ceil(Math.random() * this.stars.length);
           this.meteor();
         }, Math.round((Math.random() * 1000) + 33));
+      },
+      gotoUrl(url) {
+        console.log(123);
+        location.href = url;
       },
     },
   };

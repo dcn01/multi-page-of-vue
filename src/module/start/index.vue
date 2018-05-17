@@ -1,21 +1,10 @@
 <template>
   <div>
     <transition name="fade">
-      <div class="context" v-if="originWindowWidth > 900">
-        <img src="./images/planet.png" alt="" id="planetImg">
+      <div class="context">
         <canvas id="canvas">您的浏览器不支持canvas</canvas>
-        <div class="title-banner">
-          <img class="title" src="./images/dream.png" alt="">
-          <img class="button" src="./images/start.png" alt="" @click="gotoUrl('/list/index.html')">
-          <img class="logo" src="./images/logo.png" alt="">
-        </div>
-      </div>
-      <div class="context" v-else>
-        <img src="./images/planet-m.png" alt="" id="planetImg">
-        <canvas id="canvas">您的浏览器不支持canvas</canvas>
-        <div class="title-banner">
-          <img class="title" src="./images/dream-m.png" alt="">
-          <img class="button" src="./images/start-m.png" alt="" @click="gotoUrl('/list/index.html')">
+        <div class="title-banner" v-show="showBanner">
+          <div id="button" @click="gotoUrl('/list/index.html')"></div>
         </div>
       </div>
     </transition>
@@ -26,6 +15,13 @@
   import 'src/common/css/blog.css';
   import util from 'src/common/js/util.js';
   import slider from 'src/components/Slider/Index.vue';
+  import planet from './images/planet.png';
+  import title from './images/dream.png';
+  import button from './images/start.png';
+  import logo from './images/logo.png';
+  import planetM from './images/planet-m.png';
+  import titleM from './images/dream-m.png';
+  import buttonM from './images/start-m.png';
 
   export default {
     name: 'Index',
@@ -37,6 +33,7 @@
         windowWidth: document.body.offsetWidth,
         windowHeight: document.body.offsetHeight,
         startCount: 500,
+        showBanner: false,
       };
     },
     watch: {
@@ -45,6 +42,34 @@
       },
     },
     created() {
+      if (this.originWindowWidth > 900) {
+        this.planet = planet;
+        this.title = title;
+        this.button = button;
+      } else {
+        this.planet = planetM;
+        this.title = titleM;
+        this.button = buttonM;
+      }
+      this.logo = logo;
+      this.loadImage([
+        {
+          key: 'planet',
+          parent: 'context',
+        },
+        {
+          key: 'title',
+          parent: 'title-banner',
+        },
+        {
+          key: 'button',
+          parent: 'title-banner',
+        },
+        {
+          key: 'logo',
+          parent: 'title-banner',
+        },
+      ]);
       setTimeout(() => {
         this.init = false;
       }, 100);
@@ -55,7 +80,29 @@
       this.starsSky(this.startCount);
     },
     methods: {
+      loadImage(array) {
+        const asyncTasks = [];
+        array.forEach(item => {
+          const asyncTask = keyTmp => new Promise(resolve => {
+            const img = new Image();
+            img.src = this[`${keyTmp}`];
+            img.className = keyTmp;
+            img.parent = item.parent;
+            img.onload = () => {
+              resolve(img);
+            };
+          });
+          asyncTasks.push(asyncTask(item.key));
+        });
+        Promise.all(asyncTasks).then(imgs => {
+          imgs.forEach(img => {
+            document.querySelector(`.${img.parent}`).appendChild(img);
+          });
+          this.showBanner = true;
+        });
+      },
       gotoUrl(url) {
+        console.log(123);
         location.href = url;
       },
       starsSky(num) {
@@ -181,18 +228,19 @@
     transform:translateZ(0);
   }
 
-  #planetImg {
+  .planet {
     position: absolute;
     size: 450px 450px;
     left: 300px;
     top: 100px;
   }
   @media screen and (max-width: 900px) {
-    #planetImg {
+    .planet {
       size: 231px 413px;
       right: 0;
       left: auto;
       top: 115px;
+      z-index: 1;
     }
   }
   .context {
@@ -208,6 +256,7 @@
       display: inline-block;
       border-radius: 10px;
       box-shadow: 5px 3px 15px #281f30;
+      z-index: 2;
       .title {
         position: absolute;
         width: 35%;
@@ -221,6 +270,16 @@
         top: 15%;
         cursor: pointer;
         animation: zoom 1.5s linear infinite;
+        z-index: 1;
+      }
+      #button {
+        position: absolute;
+        width: 18%;
+        height: 80%;
+        left: 50%;
+        top: 15%;
+        cursor: pointer;
+        z-index: 2;
       }
       .logo {
         position: absolute;
