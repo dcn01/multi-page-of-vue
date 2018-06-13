@@ -93,7 +93,7 @@ var webpackConfig = {
         include: [path.join(__dirname, '..', 'src')]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
         loader: 'url-loader',
         query: {
           limit: 10000,

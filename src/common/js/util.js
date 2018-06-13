@@ -92,6 +92,20 @@ const Util = {};
   util.init = () => {
     transferRem();
     tongji();
+    // 淘气一下动态title
+    const OriginTitile = document.title;
+    let titleTime;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        document.title = '(●—●)喔哟，崩溃啦！';
+        clearTimeout(titleTime);
+      } else {
+        document.title = `(/≧▽≦/)咦！又好了！${OriginTitile}`;
+        titleTime = setTimeout(() => {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
   };
 }(Util));
 

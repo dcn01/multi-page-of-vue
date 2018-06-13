@@ -36,7 +36,7 @@
             </defs>
           </svg>
           <section v-if="showBanner" class="scene3d">
-            <div class="butterfly_container first">
+            <div class="butterfly_container first" @click="gotoUrl('http://www.cnblogs.com/guxuelong/')">
               <var class="rotate3d">
                 <var class="scale">
                   <var class="translate3d">
@@ -54,7 +54,7 @@
                 </var>
               </var>
             </div>
-            <div class="butterfly_container scale_half">
+            <div class="butterfly_container scale_half" @click="gotoUrl('https://github.com/guxuelong')">
               <var class="rotate3d">
                 <var class="scale">
                   <var class="translate3d">
@@ -185,7 +185,6 @@
         });
       },
       gotoUrl(url) {
-        console.log(123);
         location.href = url;
       },
     },
@@ -200,6 +199,7 @@
   .page {
     position: relative;
     background: #fff;
+    cursor: url(./images/favicon.ico), auto;
   }
   @media screen and (max-width: 900px) {
   }
@@ -317,7 +317,7 @@
     z-index: 999;
   }
   .scene3d {
-    cursor: pointer;
+    cursor: url(./images/favicon-big.ico), auto;
   }
   .butterfly_container {
     position: absolute;
