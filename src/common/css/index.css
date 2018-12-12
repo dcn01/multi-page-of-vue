@@ -8,6 +8,7 @@ body,html {
 	background: #eee;
 	user-select:none;
   overflow-x: hidden;
+  size: 100%;
 } 
 .blog {
   .title {
